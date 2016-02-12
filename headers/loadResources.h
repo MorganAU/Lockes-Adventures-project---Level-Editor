@@ -8,9 +8,9 @@
 #include "defs.h"
 
 
-extern SDL_Texture *loadResources_loadGraphics(char *name);
-extern void loadResources_loadEditorBackground(void);
-extern void loadResources_loadEditor(void);
+SDL_Texture *loadResources_loadGraphics(char *name);
+void loadResources_loadEditorBackground(void);
+void loadResources_loadEditorInterface(void);
 
 
 #endif // LOADRESOURCES_H_INCLUDED

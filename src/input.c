@@ -4,8 +4,13 @@
 
 #include "input.h"
 
+#include "draw.h"
+#include "management.h"
 
-void getInput(void)
+void input_windowResize(SDL_Event event);
+
+
+void input_getInput(void)
 {
     SDL_Event event;
 
@@ -18,11 +23,32 @@ void getInput(void)
         case SDL_QUIT:
             exit(EXIT_SUCCESS);
             break;
-        }
-    }
 
+        case SDL_WINDOWEVENT:
+            input_windowResize(event);
+            break;
+
+        }
+
+    }
 }
 
+
+
+void input_windowResize(SDL_Event event)
+{
+    if(event.window.event == SDL_WINDOWEVENT_SIZE_CHANGED)
+    {
+        management_setManagementScreenWidth(event.window.data1);
+        management_setManagementScreenHeight(event.window.data2);
+    }
+
+    if(event.window.event == SDL_WINDOWEVENT_RESIZED)
+        SDL_SetWindowSize(draw_getGraphicsScreen(),
+                          management_getManagementScreenWidth(),
+                          management_getManagementScreenHeight());
+
+}
 
 
 

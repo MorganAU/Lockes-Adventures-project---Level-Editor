@@ -30,21 +30,27 @@ SDL_Texture *loadResources_loadGraphics(char *name)
 
 
 
-void loadResources_loadEditor(void)
-{
-
-
-}
-
-
-
 void loadResources_loadEditorBackground(void)
 {
     draw_setGraphicsTexture(TEXTURE_EDITOR_BACKGROUND, PATH_GRAPHICS_EDITOR_BACKGROUND);
 
     if(draw_getGraphicsEditorBackground() == NULL)
     {
-        printf("SDL_Texture graphics.interface is <null> -> loadRessources.c -> l.43 !\n");
+        printf("SDL_Texture graphics.editorBackground is <null> -> loadRessources.c -> l.33 !\n");
+        exit(EXIT_FAILURE);
+    }
+
+}
+
+
+
+void loadResources_loadEditorInterface(void)
+{
+    draw_setGraphicsTexture(TEXTURE_INTERFACE, PATH_GRAPHICS_INTERFACE);
+
+    if(draw_getGraphicsInterface() == NULL)
+    {
+        printf("SDL_Texture graphics.interface is <null> -> loadRessources.c -> l.47 !\n");
         exit(EXIT_FAILURE);
     }
 

@@ -4,6 +4,8 @@
 
 #include "draw.h"
 
+#include "init.h"
+#include "font.h"
 #include "loadResources.h"
 #include "management.h"
 
@@ -11,7 +13,7 @@ void draw_drawInterface(void);
 void draw_drawImage(SDL_Texture *image, int x, int y);
 void draw_drawTilePlus(SDL_Texture *texture, int destX, int destY, int srcX, int srcY, int w, int h);
 
-Graphics graphics;
+static Graphics graphics;
 
 
 void draw_drawWindow(char *title)
@@ -53,7 +55,75 @@ void draw_drawEditorBackground(void)
         loadResources_loadEditorBackground();
     else
         /* Affiche la fenêtre de mapping */
-        draw_drawImage(graphics.editorBackground, 0, 0);
+        draw_drawTilePlus(graphics.editorBackground,
+                          0, 0,
+                          0, 0,
+                          management_getManagementScreenWidth(), management_getManagementScreenHeight());
+
+}
+
+
+
+/* Change the width depending on the size */
+int draw_resizeTexture(int textureSize, int screenSize)
+{
+    /* '1' is the beginning or ending of menu bar */
+    int i = screenSize / (textureSize - 1);
+
+    if(screenSize % (textureSize - 1) > 0)
+        i++;
+
+
+
+    return i;
+
+}
+
+
+
+void draw_drawTextureWithLoop(SDL_Texture *texture, int width, int height)
+{
+        int numberLoop = draw_resizeTexture(width, management_getManagementScreenWidth());
+        int temp = 0;
+
+        for(int i = 0 ; i < numberLoop ; i++)
+        {
+            int xSrc = i == 0 ? 0
+                       : i == numberLoop - 1 ? width - (management_getManagementScreenWidth() - temp)
+                       : 1;
+
+
+            int w = (i > 0 && i < numberLoop - 1) ? 2
+                    : 1;
+
+            draw_drawTilePlus(texture, temp, 0, xSrc, 0, width - w, height);
+
+            temp += width - w;
+        }
+
+}
+
+
+
+void draw_drawMenuBar(void)
+{
+    draw_drawTextureWithLoop(graphics.interface, MENUBAR_W, MENUBAR_H);
+
+    font_writeMenuBarText();
+
+}
+
+
+
+void draw_drawInterface(void)
+{
+    if(graphics.interface == NULL)
+        loadResources_loadEditorInterface();
+    else
+    {
+        draw_drawMenuBar();
+
+    }
 
 }
 
@@ -62,6 +132,7 @@ void draw_drawEditorBackground(void)
 void draw_drawEditor(void)
 {
     draw_drawEditorBackground();
+    draw_drawInterface();
 
     SDL_RenderPresent(graphics.renderer);
 
@@ -116,13 +187,18 @@ void draw_drawTilePlus(SDL_Texture *texture, int destX, int destY, int srcX, int
 
 
 
-
 void draw_closeGraphics(void)
 {
     if (graphics.editorBackground != NULL)
     {
         SDL_DestroyTexture(graphics.editorBackground);
         graphics.editorBackground = NULL;
+    }
+
+    if (graphics.interface != NULL)
+    {
+        SDL_DestroyTexture(graphics.interface);
+        graphics.interface = NULL;
     }
 
 }
@@ -154,11 +230,21 @@ SDL_Texture *draw_getGraphicsEditorBackground(void)
 
 
 
+SDL_Texture *draw_getGraphicsInterface(void)
+{
+    return graphics.interface;
+
+}
+
+
+
 ///////***** MUTATORS *****///////
 void draw_setGraphicsTexture(int texture, char *path)
 {
     if(texture == TEXTURE_EDITOR_BACKGROUND)
-    graphics.editorBackground = loadResources_loadGraphics(path);
+        graphics.editorBackground = loadResources_loadGraphics(path);
+    else if(texture == TEXTURE_INTERFACE)
+        graphics.interface = loadResources_loadGraphics(path);
 
 }
 

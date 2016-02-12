@@ -1,4 +1,4 @@
-//Locke's Adventures Project - SDL 2.0
+//LAD - SDL 2.0
 //Level Editor v.0.9
 //main.c
 
@@ -17,14 +17,12 @@ int main(int argc, char *argv[])
     (void)argv;
 
    	/* Initializing the SDL */
-	init("Level Editor");
+	init_init("Level Editor");
 
-    /* Load resources */
-    loadResources_loadEditor();
 
 
 	/* Call cleanup function at the end of program */
-    atexit(cleanup);
+    atexit(init_cleanup);
 
     unsigned int frameLimit = 16;
     int go = 1;
@@ -32,7 +30,7 @@ int main(int argc, char *argv[])
 	/* Main loop */
 	while(go)
 	{
-	    getInput();
+	    input_getInput();
 
 	    /* Display */
 	    draw_drawEditor();

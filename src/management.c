@@ -4,7 +4,7 @@
 
 #include "management.h"
 
-Management management;
+static Management management;
 
 
 void management_delay(unsigned int frameLimit)

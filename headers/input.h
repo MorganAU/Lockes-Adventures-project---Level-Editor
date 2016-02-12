@@ -9,7 +9,7 @@
 #include "defs.h"
 
 
-extern void getInput(void);
+extern void input_getInput(void);
 
 
 #endif // INPUT_H_INCLUDED

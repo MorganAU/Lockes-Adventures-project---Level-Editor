@@ -20,12 +20,24 @@
 #include "structs.h"
 
 
+/* Font path */
+ #define PATH_FONT_GENBASB "ressources/font/PIXEARG_.ttf"
+
+
 /* Graphics resources path */
 #define PATH_GRAPHICS_EDITOR_BACKGROUND "ressources/graphics/editor/editor_background.png"
+#define PATH_GRAPHICS_INTERFACE "ressources/graphics/editor/interface.png"
 
 
-/* Number of texture */
+/* List of texture */
 #define TEXTURE_EDITOR_BACKGROUND 1
+#define TEXTURE_INTERFACE 2
+
+
+/* List of setColor */
+#define COLOR_NONE -1
+#define WHITE 0
+#define BLACK 1
 
 
 #endif // DEFS_H_INCLUDED

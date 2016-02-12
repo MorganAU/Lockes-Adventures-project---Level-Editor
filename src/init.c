@@ -5,10 +5,11 @@
 #include "init.h"
 
 #include "draw.h"
+#include "font.h"
 #include "management.h"
 
 
-void init(char *title)
+void init_init(char *title)
 {
     management_setManagementScreenWidth(WINDOW_MINIMUM_SIZE);
     management_setManagementScreenHeight(WINDOW_MINIMUM_SIZE);
@@ -41,16 +42,29 @@ void init(char *title)
         exit(EXIT_FAILURE);
     }
 
+    /* Initialize SDL_TTF */
+    if(TTF_Init() < 0)
+    {
+        printf("Couldn't initialize SDL TTF: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    /* Load the font */
+    font_loadFont(PATH_FONT_GENBASB);
+
 
 }
 
 
 
-void cleanup(void)
+void init_cleanup(void)
 {
+    /* Clean graphics */
     draw_closeGraphics();
-
     draw_cleanWindowAndRenderer();
+
+    /* Close fonts */
+    font_closeFont();
 
     /* Quitte la SDL */
     SDL_Quit();

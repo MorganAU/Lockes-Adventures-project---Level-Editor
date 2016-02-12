@@ -9,8 +9,8 @@
 #include "defs.h"
 
 
-extern void init(char *title);
-extern void cleanup(void);
+void init_init(char *title);
+void init_cleanup(void);
 
 
 /* Window */

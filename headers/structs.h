@@ -11,7 +11,8 @@ typedef struct Graphics
     SDL_Window *screen;
 	SDL_Renderer *renderer;
 
-	SDL_Texture *editorBackground;
+	SDL_Texture *editorBackground, *interface;
+
 
 } Graphics;
 
@@ -22,6 +23,14 @@ typedef struct Management
 	int screenHeight, screenWidth;
 
 } Management;
+
+
+typedef struct Font
+{
+    /* Font size used by the program */
+    TTF_Font *font8;
+
+} Font;
 
 
 #endif // STRUCTS_H_INCLUDED
